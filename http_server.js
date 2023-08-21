@@ -4,11 +4,11 @@ const low     = require('lowdb');
 const fs      = require('lowdb/adapters/FileSync');
 const adapter = new fs('db.json');
 const db      = low(adapter);
-//const cors    = require('cors');
+const cors    = require('cors');
 const  {faker}  = require('@faker-js/faker');
 
 // allow cross-origin resource sharing (CORS)
-//app.use(cors());
+app.use(cors());
 
 // data parser - used to parse post data
 var bodyParser = require('body-parser');
@@ -21,6 +21,8 @@ app.use(express.static('public'));
 
 // init the data store
 db.defaults({ users: []}).write();
+
+let port = process.env.PORT || 3000;
 
 // return all users
 app.get('/data', function(req, res){     
@@ -54,6 +56,6 @@ app.post('/add', function(req, res){
 
 // start server
 // -----------------------
-app.listen(3000, function(){
-    console.log('Running on port 3000!')
-})
+app.listen(port, function(){
+    console.log(`Running on port ${port}`);
+});
